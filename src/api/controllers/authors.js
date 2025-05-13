@@ -59,7 +59,7 @@ const deleteAuthor = async (req, res, next) => {
   try {
     const { id } = req.params;
     const authorDeleted = await Authors.findByIdAndDelete(id);
-    return res.status(200).jason(authorDeleted);
+    return res.status(200).json(authorDeleted);
   } catch (error) {
     return res.status(400).json('Error')
   }
