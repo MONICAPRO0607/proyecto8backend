@@ -5,10 +5,17 @@ require("dotenv").config();
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  params: {
-    folder: "proyecto8backend",
-    allowedFormats: ["jpg", "jpeg", "png", "gif", "webp"]
-  }
+  params: async (req, file) => {
+    const author = req.body.authors || 'default'; 
+    
+    const folderName = `proyecto8backend/${author.toLowerCase().replace(/\s+/g, "-")}`;
+
+    return {
+    folder: folderName,
+    allowedFormats: ["jpg", "jpeg", "png", "gif", "webp"],
+    public_id: file.originalname.split(".")[0],
+  };
+}
 });
 
 const upload = multer({ storage: storage });
